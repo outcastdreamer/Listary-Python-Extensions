@@ -9,8 +9,6 @@ from pprint import pprint
 
 main_dict = {}
 
-
-
 def start():
 	"""Takes the project name and time stamp at which the project started at"""
 	global main_dict
@@ -97,33 +95,63 @@ def history():
 	final_dict["stop_timestamp"] = main_dict[list(main_dict.keys())[1]][:-7]
 	final_dict["delta"] = main_dict["delta"]
 	final_dict["delta_readable"] = main_dict["delta_readable"]
-	print("\nlog final dict : \n",final_dict)
+	# print("\nlog final dict : \n",final_dict)
 	try:
 		with open("hist.json","r") as file:
 			new_final_dict = json.load(file)
-		print("\nlog after reading file :\n",new_final_dict)
-		print("\nlog keys : ",list(new_final_dict.keys()))
-
-		new_final_dict[final_dict["date"]].append(final_dict)
-		
-		print("\nlog Updated_final_dict :\n",new_final_dict)
+		# print("\nlog after reading file :\n",new_final_dict)
+		# print("\nlog keys : ",list(new_final_dict.keys()))
+		date = "-".join(str(datetime.now()).split()[0].split("-")[::-1])
+		if date == list(new_final_dict.keys())[0]:
+			new_final_dict[final_dict["date"]].append(final_dict)
+		else:
+			raise Exception()
+		# print("\nlog Updated_final_dict :\n")
+		# print(new_final_dict)
 		with open("hist.json","w") as file:
 			json.dump(new_final_dict, file,indent=4)
 	except:
-		print("\n\nlog jumped to except clause")
+		# print("\n\nlog jumped to except clause")
 		new_final_dict = {}
 		temp_list = []
 		temp_list.append(final_dict)
 		new_final_dict[final_dict["date"]] = temp_list
-		with open("hist.json","a") as file:
+		with open("hist.json","w") as file:
 			json.dump(new_final_dict, file,indent=4)
 
 
 def display_hist():
 	"""read the hist.json file and display the hist for the day"""
-	with open("hist.json","r") as file:
-		final_dict = json.load(file)
-	p# print(final_dict)
+	try:
+		with open("hist.json","r") as file:
+			reader_dict = json.load(file)
+		date = "-".join(str(datetime.now()).split()[0].split("-")[::-1])
+		# print("\n\n\tDetailed Logs for today : \n")
+		#p# print(reader_dict[date])
+		l = reader_dict[date]
+		#sl = []
+		count = 1
+		final_string = ""
+		for i in l:
+			#sl.append({"project_name":i["project_name"],"delta":i["delta
+			final_string+="\n{}. {}\nTime Spent : {}\n".format(count,i["project_name"].upper(),i["delta"])
+			count+=1
+		tk.Tk().withdraw()
+		showinfo("History for Today! ({})".format(date),
+			final_string)
+	except:
+		tk.Tk().withdraw()
+		showerror("ERROR!","There are no projects recorded today!")
+
+def cleaner():
+	try:
+		os.remove("hist.json")
+		tk.Tk().withdraw()
+		showinfo("LISTARY PY EXTENSION","History has been cleared!")
+	except:
+		tk.Tk().withdraw()
+		showerror("ERROR!","History has already been cleared!")
+	# print(final_dict)
 
 if __name__=='__main__':
 	os.system("cls")

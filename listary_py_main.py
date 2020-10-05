@@ -146,19 +146,19 @@ def main():
 			try:
 				f = open("project.txt","r")
 				l = f.readlines()
-				print("log of l and x[6:]:",x[6:],l)
+				# print("log of l and x[6:]:",x[6:],l)
 				f.close()
 				if len(l)==2:
 					#if x[6:] not in l[0]:
 					tk.Tk().withdraw()
-					showerror("ERROR!","previous Project \"{}\" is still running!!!".format(l[0].upper()[:-len("_start\n")]))
+					showerror("ERROR!","Previous project \"{}\" is still running!!!".format(l[0].upper()[:-len("_start\n")]))
 				else:
 					file = open("project.txt","w")
 					file.write(proj)
 					file.close()
 					project_manager.start()
 			except:
-				print("log is here")
+				# print("log is here")
 				file = open("project.txt","w")
 				file.write(proj)
 				file.close()
@@ -169,23 +169,34 @@ def main():
 			file = open("project.txt","r")
 			p = file.readlines()
 			proj = p[0][:-len("_start\n")]
-			print("log p",p)
-			print("log proj",proj)
+			# print("log p",p)
+			# print("log proj",proj)
 			file.close()
 			file = open("project.txt","a")
 			proj = "\n"+proj+"_stop"
-			print("log new proj",proj)
+			# print("log new proj",proj)
 			file.write(proj)
 			file.close()
 			project_manager.stop()
-		elif "hist" in x.lower()[0:4]:
-			project_manager.display_hist()	
+		elif "hist" in x.lower()[0:4] or "history" in x.lower()[0:7]:
+			project_manager.display_hist()
+		elif "clr" in x.lower()[0:3]:
+			project_manager.cleaner()	
 		elif new_path!="":
 			os.chdir(new_path)
 			st(x)
 		else:
 			# print("log final")
-			st(x)		
+			os.chdir(main_path)
+			st(x+" > cmd.txt")
+			f = open("cmd.txt","r")
+			command = "".join(f.readlines())
+			#print("\nCommand : {}\n".format(len(command)),command)
+			f.close()
+			if len(command)<1:
+				tk.Tk().withdraw()
+				showerror("ERROR!","Not a valid CMD or LISTARY PY command!")
+
 	#try:
 	# else:
 	# 	st(x)
