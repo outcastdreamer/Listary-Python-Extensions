@@ -198,7 +198,7 @@ def main():
 	- Offline working dictionary and display error for limited dictionary options if offline (offline checking mechanism)
 	- Better and cleaner GUI (maybe)
 	- Weather and config for weather
-	- config.json
+	- config.json : set main_path, & other parameters here.
 	- currency converter
 """
 if __name__ == '__main__':
