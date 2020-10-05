@@ -78,14 +78,14 @@ root.mainloop()
 def main():
 	global button1,button2,entry1,x,root,main_path,master,output
 	global days,hour,mins,sec,d
-	# print("log 0:",x,sep="")
-	# print("log 01:",True if "start " in x.lower() else False,sep="")
-	# print("log 02:",x[0:6],sep="")
-	# print("log 03:",x[6:],sep="")
+	
+	
+	
+	
 	new_path = "" 
 	try:
 		if int(x) == 1:
-			# print("log initial")
+			
 			tk.Tk().withdraw()
 			new_path = os.path.abspath(askdirectory())
 			os.chdir(main_path)
@@ -94,16 +94,16 @@ def main():
 			f.close()
 			st("python \"%s\""%(main_file))
 	except:
-		# print("log start")
+		
 		os.chdir(main_path)
 		f = open("path.txt","r")
 		new_path = f.read()
 		f.close()
 		if x.lower()=="up" or x.lower()=="uptime":
-			# print("log")
+			
 			uptimer.display()
 		elif "dy" in x.lower()[0:2]:
-			#if len(master.meaning("hello"))>5:
+			#insert offline or not checker here
 			if "dy m " in x.lower():
 				m = x[5:]
 				tk.Tk().withdraw()
@@ -116,9 +116,6 @@ def main():
 				a = x[5:]
 				tk.Tk().withdraw()
 				showinfo("Antonym of %s"%(a),master.antonym(a))
-			# else:
-			# 	tk.Tk().withdraw()
-			# 	showerror("ERROR","Please check your internet connection!")
 		elif "for" in x.lower()[0:3]:
 			if "for l " in x.lower():
 				output = x[6:].lower()
@@ -139,17 +136,16 @@ def main():
 				output = " "+output
 			Clipboard(output)
 		elif "start" in x.lower()[0:5]:
-			# print("log 1")
+			
 			proj = x[6:]+"_start"
-			# print("log 2",proj)
+			
 			os.chdir(main_path)
 			try:
 				f = open("project.txt","r")
 				l = f.readlines()
-				# print("log of l and x[6:]:",x[6:],l)
+				
 				f.close()
 				if len(l)==2:
-					#if x[6:] not in l[0]:
 					tk.Tk().withdraw()
 					showerror("ERROR!","Previous project \"{}\" is still running!!!".format(l[0].upper()[:-len("_start\n")]))
 				else:
@@ -158,23 +154,23 @@ def main():
 					file.close()
 					project_manager.start()
 			except:
-				# print("log is here")
+				
 				file = open("project.txt","w")
 				file.write(proj)
 				file.close()
 				project_manager.start()
-			# print(os.getcwd())
+			
 		elif "stop" in x.lower()[0:4]:
 			os.chdir(main_path)
 			file = open("project.txt","r")
 			p = file.readlines()
 			proj = p[0][:-len("_start\n")]
-			# print("log p",p)
-			# print("log proj",proj)
+			
+			
 			file.close()
 			file = open("project.txt","a")
 			proj = "\n"+proj+"_stop"
-			# print("log new proj",proj)
+			
 			file.write(proj)
 			file.close()
 			project_manager.stop()
@@ -186,27 +182,25 @@ def main():
 			os.chdir(new_path)
 			st(x)
 		else:
-			# print("log final")
+			
 			os.chdir(main_path)
 			st(x+" > cmd.txt")
 			f = open("cmd.txt","r")
 			command = "".join(f.readlines())
-			#print("\nCommand : {}\n".format(len(command)),command)
+			#
 			f.close()
 			if len(command)<1:
 				tk.Tk().withdraw()
 				showerror("ERROR!","Not a valid CMD or LISTARY PY command!")
 
-	#try:
-	# else:
-	# 	st(x)
-	# 	print (x)
-	# except:
-	# 	tk.Tk().withdraw()
-	# 	showerror("ERROR!","Not a valid CMD command!")
-
-
-
+"""
+ Things to add:
+	- Offline working dictionary and display error for limited dictionary options if offline (offline checking mechanism)
+	- Better and cleaner GUI (maybe)
+	- Weather and config for weather
+	- config.json
+	- currency converter
+"""
 if __name__ == '__main__':
 	main()
 
