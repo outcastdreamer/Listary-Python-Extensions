@@ -12,13 +12,19 @@ import uptimer
 import project_manager
 
 main_path = os.path.abspath(r"C:\Users\Username\Add path to\listary_py_main")
+main_file = os.path.abspath(main_path+"/listary_py_main.py")
+
+os.chdir(main_path)
 
 #notif = ToastNotifier()
+with open("config.json","r") as file:
+			reader_dict = json.load(file)
+
+print("version : ",reader_dict["version"])
 
 x = ""
 output = ""
 master = PyDictionary()
-main_file = os.path.abspath(main_path+"/listary_py_main.py")
 #print(main_path)
 
 
