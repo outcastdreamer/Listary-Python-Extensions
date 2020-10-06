@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter.filedialog import *
 from tkinter.messagebox import *
 import os
+import json
 from os import system as st
 from subprocess import Popen, PIPE
 import pyperclip as pc 
