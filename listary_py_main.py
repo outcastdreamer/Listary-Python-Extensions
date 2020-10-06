@@ -20,7 +20,7 @@ os.chdir(main_path)
 with open("config.json","r") as file:
 			reader_dict = json.load(file)
 
-print("version : ",reader_dict["version"])
+#print("version : ",reader_dict["version"])
 
 x = ""
 output = ""
