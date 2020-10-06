@@ -7,19 +7,17 @@ from subprocess import Popen, PIPE
 import pyperclip as pc 
 from PyDictionary import PyDictionary
 import ctypes
-import json
 #from win10toast import ToastNotifier
 import uptimer
 import project_manager
 
+main_path = os.path.abspath(r"C:\Users\Username\Add path to\listary_py_main")
+
 #notif = ToastNotifier()
-with open("config.json","r") as file:
-			path = json.load(file)
 
 x = ""
 output = ""
 master = PyDictionary()
-main_path = os.path.abspath(r"%s"%(path["main_path"]))
 main_file = os.path.abspath(main_path+"/listary_py_main.py")
 #print(main_path)
 
