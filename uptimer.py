@@ -1,5 +1,6 @@
 # ctypes required for using GetTickCount64() 
-import ctypes 
+import ctypes
+import os 
 #from win10toast import ToastNotifier
 import tkinter as tk
 from tkinter.messagebox import *
@@ -101,3 +102,9 @@ def assigner():
 		d[int(sec)]="second"
 	else:
 		d[int(sec)]="seconds"
+
+
+if __name__=='__main__':
+	os.system("cls")
+	print("\nPlease run listary_py_main.py instead\n\n")
+	pass

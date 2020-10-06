@@ -169,4 +169,5 @@ def cleaner():
 
 if __name__=='__main__':
 	os.system("cls")
+	print("\nPlease run listary_py_main.py instead\n\n")
 	pass

@@ -2,21 +2,26 @@ import tkinter as tk
 from tkinter.filedialog import *
 from tkinter.messagebox import *
 import os
+from os import system as st
 from subprocess import Popen, PIPE
 import pyperclip as pc 
 from PyDictionary import PyDictionary
 import ctypes
+import json
 #from win10toast import ToastNotifier
 import uptimer
 import project_manager
 
 #notif = ToastNotifier()
+with open("config.json","r") as file:
+			path = json.load(file)
 
 x = ""
 output = ""
 master = PyDictionary()
-main_path = os.path.abspath(r"C:\Users\Saket\Google Drive\Github_Learning\Projects\Proj_3_Listary_Py_Extensions")
+main_path = os.path.abspath(r"%s"%(path["main_path"]))
 main_file = os.path.abspath(main_path+"/listary_py_main.py")
+#print(main_path)
 
 
 button1 = None
@@ -58,7 +63,7 @@ canvas1.create_window(200, 25, window=label1)
 label2 = tk.Label(root, text='Type 1 to select your current working directory')
 label2.config(font=('helvetica', 10))
 
-label3 = tk.Label(root, text='Press ENTER to Execute or Escape/close')
+label3 = tk.Label(root, text='Press ENTER to execute command')
 label3.config(font=('helvetica', 10))
 
 canvas1.create_window(190, 50, window=label2)
@@ -80,9 +85,6 @@ root.mainloop()
 def main():
 	global button1,button2,entry1,x,root,main_path,master,output
 	global days,hour,mins,sec,d
-	
-	
-	
 	
 	new_path = "" 
 	try:
@@ -187,6 +189,8 @@ def main():
 			try:
 				ot = Popen("%s"%(x),stdout=PIPE)
 				r = ot.communicate()
+				tk.Tk().withdraw()
+				showinfo("Successfully Excecuted!","Your CMD command was successfully executed!")
 			except:
 				if len(x)==0:
 					pass
@@ -199,6 +203,8 @@ def main():
 			try:
 				ot = Popen("%s"%(x),stdout=PIPE)
 				r = ot.communicate()
+				tk.Tk().withdraw()
+				showinfo("Successfully Excecuted!","Your CMD command was successfully executed!")
 			except:
 				if len(x)==0:
 					pass
