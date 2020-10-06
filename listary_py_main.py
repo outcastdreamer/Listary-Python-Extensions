@@ -2,15 +2,15 @@ import tkinter as tk
 from tkinter.filedialog import *
 from tkinter.messagebox import *
 import os
-from os import system as st
+from subprocess import Popen, PIPE
 import pyperclip as pc 
 from PyDictionary import PyDictionary
 import ctypes
-from win10toast import ToastNotifier
+#from win10toast import ToastNotifier
 import uptimer
 import project_manager
 
-notif = ToastNotifier()
+#notif = ToastNotifier()
 
 x = ""
 output = ""
@@ -35,7 +35,9 @@ def getText ():
 def Clipboard(o):
 	global x,output
 	pc.copy(o)
-	notif.show_toast("LISTARY PY","Text copied to clipboard!",duration=4)
+	tk.Tk().withdraw()
+	showinfo("LISTARY PY","Text copied to clipboard!")
+	#notif.show_toast("LISTARY PY","Text copied to clipboard!",duration=4)
 
 
 root= tk.Tk()
@@ -147,7 +149,7 @@ def main():
 				f.close()
 				if len(l)==2:
 					tk.Tk().withdraw()
-					showerror("ERROR!","Previous project \"{}\" is still running!!!".format(l[0].upper()[:-len("_start\n")]))
+					showerror("ERROR!","Previous Project \"{}\" is still running!!!".format(l[0].upper()[:-len("_start\n")]))
 				else:
 					file = open("project.txt","w")
 					file.write(proj)
@@ -176,22 +178,41 @@ def main():
 			project_manager.stop()
 		elif "hist" in x.lower()[0:4] or "history" in x.lower()[0:7]:
 			project_manager.display_hist()
+		elif "clr p" in x.lower()[0:5]:
+			project_manager.clear_prev()
 		elif "clr" in x.lower()[0:3]:
 			project_manager.cleaner()	
 		elif new_path!="":
 			os.chdir(new_path)
-			st(x)
+			try:
+				ot = Popen("%s"%(x),stdout=PIPE)
+				r = ot.communicate()
+			except:
+				if len(x)==0:
+					pass
+				else:
+					tk.Tk().withdraw()
+					showerror("ERROR!","Not a valid CMD or LISTARY PY command! Please try again!")
 		else:
 			
 			os.chdir(main_path)
-			st(x+" > cmd.txt")
-			f = open("cmd.txt","r")
-			command = "".join(f.readlines())
-			#
-			f.close()
-			if len(command)<1:
-				tk.Tk().withdraw()
-				showerror("ERROR!","Not a valid CMD or LISTARY PY command!")
+			try:
+				ot = Popen("%s"%(x),stdout=PIPE)
+				r = ot.communicate()
+			except:
+				if len(x)==0:
+					pass
+				else:
+					tk.Tk().withdraw()
+					showerror("ERROR!","Not a valid CMD or LISTARY PY command! Please try again!")
+			# st(x+" > cmd.txt")
+			# f = open("cmd.txt","r")
+			# command = "".join(f.readlines())
+			# #
+			# f.close()
+			# if len(command)<1:
+			# 	tk.Tk().withdraw()
+			# 	showerror("ERROR!","Not a valid CMD or LISTARY PY command!")
 
 """
  Things to add:

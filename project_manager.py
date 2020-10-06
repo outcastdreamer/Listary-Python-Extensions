@@ -16,6 +16,8 @@ def start():
 	f = open("project.txt","a")
 	f.write("\n"+str(time))
 	f.close()
+	tk.Tk().withdraw()
+	showinfo("LISTARY PY","Project has been started!")
 
 
 def stop():
@@ -88,7 +90,9 @@ def history():
 		if date == list(new_final_dict.keys())[0]:
 			new_final_dict[final_dict["date"]].append(final_dict)
 		else:
-			raise Exception()
+			temp_list = []
+			temp_list.append(final_dict)
+			new_final_dict.update({date:temp_list})
 		
 		
 		with open("hist.json","w") as file:
@@ -111,11 +115,15 @@ def display_hist():
 		date = "-".join(str(datetime.now()).split()[0].split("-")[::-1])
 		
 		l = reader_dict[date]
+		if len(reader_dict[date])==0:
+			raise Exception()
+
 		count = 1
 		final_string = ""
 		for i in l:
 			final_string+="\n{}. {}\nTime Spent : {}\n".format(count,i["project_name"].upper(),i["delta"])
 			count+=1
+		
 		tk.Tk().withdraw()
 		showinfo("History for Today! ({})".format(date),
 			final_string)
@@ -123,14 +131,40 @@ def display_hist():
 		tk.Tk().withdraw()
 		showerror("ERROR!","There are no projects recorded today!")
 
+def clear_prev():
+	try:
+		with open("hist.json","r") as file:
+			reader_dict = json.load(file)
+		date = "-".join(str(datetime.now()).split()[0].split("-")[::-1])
+		tk.Tk().withdraw()
+		c = askyesno("PLEASE CONFIRM!","Do you really want to delete the previous project recorded?")
+		if c==True:
+			reader_dict[date].pop()
+			with open("hist.json","w") as file:
+				json.dump(reader_dict, file,indent=4)
+			tk.Tk().withdraw()
+			showinfo("LISTARY PY EXTENSION","Previous history has been cleared!")
+		else:
+			pass
+	except:
+		tk.Tk().withdraw()
+		showerror("ERROR!","There are no projects recorded today!")		
+
 def cleaner():
 	try:
-		os.remove("hist.json")
 		tk.Tk().withdraw()
-		showinfo("LISTARY PY EXTENSION","History has been cleared!")
+		c = askyesno("PLEASE CONFIRM!","Do you really want to delete the complete history?\n(Cannot be restored!!)")
+		if c==True:
+			os.remove("hist.json")
+			tk.Tk().withdraw()
+			showinfo("LISTARY PY EXTENSION","History has been cleared!")
+		else:
+			pass
 	except:
 		tk.Tk().withdraw()
 		showerror("ERROR!","History has already been cleared!")
+
+
 	
 
 if __name__=='__main__':

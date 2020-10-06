@@ -1,11 +1,11 @@
 # ctypes required for using GetTickCount64() 
 import ctypes 
-from win10toast import ToastNotifier
+#from win10toast import ToastNotifier
 import tkinter as tk
 from tkinter.messagebox import *
 
 
-notifier = ToastNotifier() 
+#notifier = ToastNotifier() 
 
 d = {}
 day = hour = mins = sec = 0
