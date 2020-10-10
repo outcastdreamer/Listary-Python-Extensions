@@ -8,25 +8,24 @@ from subprocess import Popen, PIPE
 import pyperclip as pc 
 from PyDictionary import PyDictionary
 import ctypes
-#from win10toast import ToastNotifier
 import uptimer
 import project_manager
 
 main_path = os.path.abspath(r"C:\Users\Username\Add path to\listary_py_main")
+
 main_file = os.path.abspath(main_path+"/listary_py_main.py")
 
 os.chdir(main_path)
 
-#notif = ToastNotifier()
 with open("config.json","r") as file:
 			reader_dict = json.load(file)
 
-#print("version : ",reader_dict["version"])
+
 
 x = ""
 output = ""
 master = PyDictionary()
-#print(main_path)
+
 
 
 button1 = None
@@ -235,5 +234,4 @@ def main():
 """
 if __name__ == '__main__':
 	main()
-
 
